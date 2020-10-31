@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpotifyLyricsFinder"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1200" MinHeight="400" MinWidth="685">
+        Title="SpotifyLyricsFinder" Height="700" Width="1200" MinHeight="400" MinWidth="685" Background="#d8dce3">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="55*" />
@@ -18,15 +18,15 @@
         </Grid.RowDefinitions>
 
 
-        <TextBox Name="SearchTextBox" Grid.Column="0" Grid.Row="0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="70" MaxLines="1" Margin="20,0,20,0" KeyDown="SearchTextBox_OnKeyDown"></TextBox>
+        <TextBox Name="SearchTextBox" Grid.Column="0" Grid.Row="0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="70" MaxLines="1" Margin="20,0,20,0" KeyDown="SearchTextBox_OnKeyDown" Background="#eeeeee"></TextBox>
         <Button Name="SearchButton" Grid.Column="1" Grid.Row="0" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center" Click="SearchButton_OnClick">SEARCH</Button>
 
 
-        <ListView Name="songsList" Grid.ColumnSpan="2" Grid.Row="1" SelectionChanged="SongsList_OnSelectionChanged">
+        <ListView Name="songsList" Grid.ColumnSpan="2" Grid.Row="1" SelectionChanged="SongsList_OnSelectionChanged" Background="#ffffff">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding name}"></TextBlock>
+                        <TextBlock Text="{Binding name}" FontSize="17"></TextBlock>
                         <StackPanel>
                             <ListView ItemsSource="{Binding artists}" IsEnabled="False" BorderThickness="0">
                                 <ListView.ItemTemplate>
@@ -41,10 +41,13 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackPanel Grid.Column="2" Grid.Row="0" Margin="5,5,5,5">
-            <TextBox Name="TitleTextBox" FontSize="20" HorizontalAlignment="Center" IsReadOnly="True" BorderThickness="0"></TextBox>
-            <TextBox Name="ArtistTextBox" IsEnabled="False" BorderThickness="0" HorizontalAlignment="Center" Margin="5,5,5,5"></TextBox>
-        </StackPanel>
+        <Border BorderBrush="#aaaaaa" BorderThickness="2" Grid.Column="2" Grid.Row="0">
+            <StackPanel  Margin="5,5,5,5">
+                <TextBox Name="TitleTextBox" FontSize="20" HorizontalAlignment="Center" IsReadOnly="True" BorderThickness="0" Background="Transparent"></TextBox>
+                <TextBox Name="ArtistTextBox" IsEnabled="False" BorderThickness="0" HorizontalAlignment="Center" Margin="5,5,5,5" Background="Transparent"></TextBox>
+            </StackPanel>
+        </Border>
+        
         
 
         <ScrollViewer Grid.Column="2" Grid.Row="1">
