@@ -18,3 +18,5 @@ To use the application:
 * Press the **SEARCH** button **(2)**
 * If songs were found, select one from the list **(3)**
 * If the lyrics were found, they will appear on the side panel **(4)**
+
+![Usage](screenshots/usage.png)
