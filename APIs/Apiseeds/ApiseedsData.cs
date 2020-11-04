@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace SpotifyLyricsFinder.APIs.Apiseeds
 {
@@ -12,11 +13,10 @@ namespace SpotifyLyricsFinder.APIs.Apiseeds
             apiseedsApi = new ApiseedsAPI();
         }
 
-
         //takes song lyrics out of Apiseeds API response
-        public RootObjectApiseeds searchLyrics(string artist, string name)
+        public async Task<RootObjectApiseeds> SearchLyrics(string artist, string name)
         {
-            string jsonSongs = apiseedsApi.searchRequest(artist, name);
+            string jsonSongs = await apiseedsApi.SearchRequest(artist, name);
             searchedLyrics = JsonConvert.DeserializeObject<RootObjectApiseeds>(jsonSongs);
             return searchedLyrics;
         }

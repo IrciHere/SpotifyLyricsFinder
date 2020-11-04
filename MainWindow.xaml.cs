@@ -3,7 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using SpotifyLyricsFinder.APIs;
+using SpotifyLyricsFinder.APIs.Apiseeds;
+using SpotifyLyricsFinder.APIs.Genius;
+using SpotifyLyricsFinder.APIs.Spotify;
 
 namespace SpotifyLyricsFinder
 {
@@ -14,17 +16,19 @@ namespace SpotifyLyricsFinder
     {
         SpotifyData _spotifyData = new SpotifyData();
         ApiseedsData _apiseedsData = new ApiseedsData();
+        GeniusData _geniusData = new GeniusData();
 
         RootObjectSpotify songsSpotify;
         RootObjectApiseeds songsApiseeds;
+        RootObjectGenius songsGenius;
 
         public MainWindow()
-        {          
-            InitializeComponent();           
+        {
+            InitializeComponent();
         }
 
 
-        private void SearchButton_OnClick(object sender, RoutedEventArgs e)
+        private async void SearchButton_OnClick(object sender, RoutedEventArgs e)
         {
             string songNameSearch = SearchTextBox.Text;
             if (songNameSearch == "")
@@ -33,8 +37,15 @@ namespace SpotifyLyricsFinder
                 return;
             }
 
-            songsSpotify = _spotifyData.searchSongs(songNameSearch);
-            if(songsSpotify != null)
+            try
+            {
+                songsSpotify = await _spotifyData.SearchSongs(songNameSearch);
+            }
+            catch
+            {
+
+            }
+            if (songsSpotify != null)
                 songsList.ItemsSource = songsSpotify.tracks.items;
         }
 
@@ -48,9 +59,9 @@ namespace SpotifyLyricsFinder
         }
 
 
-        private void SongsList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void SongsList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
             var selectedIndex = songsList.SelectedIndex;
 
             if (selectedIndex < 0) return;
@@ -68,16 +79,53 @@ namespace SpotifyLyricsFinder
             }
 
             ArtistTextBox.Text = artists.Substring(0, artists.Length - 2);
+            string lyrics = "";
 
+
+            //firstly search for lyrics in Apiseeds API
             try
             {
-                songsApiseeds = _apiseedsData.searchLyrics(songName, songArtist);
-                LyricsTextBlock.Text = songsApiseeds.result.track.text;
+                songsApiseeds = await _apiseedsData.SearchLyrics(songName, songArtist);
+                lyrics = songsApiseeds.result.track.text;
             }
-            catch (NullReferenceException)
+            catch
             {
-                LyricsTextBlock.Text = "Couldn't find the lyrics :(";
+                lyrics = "";
             }
+            if (!String.IsNullOrWhiteSpace(lyrics))
+            {
+                LyricsTextBlock.Text = lyrics;
+                return;
+            }
+
+
+            //secondly search for lyrics in genius.com
+            try
+            {
+                songsGenius = await _geniusData.SearchSongs(songArtist, songName);
+                var url = songsGenius.response.hits[0].result.url;
+                GeniusScrap geniusScrap = new GeniusScrap();
+                lyrics = await geniusScrap.ScrapLyrics(url);
+            }
+            catch
+            {
+                lyrics = "";
+            }
+            if (!String.IsNullOrWhiteSpace(lyrics))
+            {
+                LyricsTextBlock.Text = lyrics;
+                return;
+            }
+
+            //if there weren't any lyrics in both APIs
+            LyricsTextBlock.Text = "Couldn't find the lyrics :(";
+        }
+
+
+        //couldn't do it in constructor, as GetNewToken() is async function (because it uses POST request)
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            _spotifyData.spotifyApi.GetNewToken();
         }
     }
 }

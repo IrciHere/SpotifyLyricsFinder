@@ -1,6 +1,6 @@
 ﻿
 
-namespace SpotifyLyricsFinder.APIs
+namespace SpotifyLyricsFinder.APIs.Apiseeds
 {
     //generated json model from spotify API responses, unused values commented out
 

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1F0C3ACA-E2C2-44D5-B90A-EF0471823994}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>SpotifyLyricsFinder</RootNamespace>
     <AssemblyName>SpotifyLyricsFinder</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -34,7 +34,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.11.26.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.26\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -62,14 +68,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="APIs\ApiseedsAPI.cs" />
-    <Compile Include="APIs\ApiseedsAuth.cs" />
-    <Compile Include="APIs\ApiseedsData.cs" />
-    <Compile Include="APIs\ApiseedsModel.cs" />
-    <Compile Include="APIs\SpotifyAPI.cs" />
-    <Compile Include="APIs\SpotifyAuth.cs" />
-    <Compile Include="APIs\SpotifyData.cs" />
-    <Compile Include="APIs\SpotifyModel.cs" />
+    <Compile Include="APIs\Apiseeds\ApiseedsAPI.cs" />
+    <Compile Include="APIs\Apiseeds\ApiseedsAuth.cs" />
+    <Compile Include="APIs\Apiseeds\ApiseedsData.cs" />
+    <Compile Include="APIs\Apiseeds\ApiseedsModel.cs" />
+    <Compile Include="APIs\BaseWebRequest.cs" />
+    <Compile Include="APIs\Genius\GeniusAPI.cs" />
+    <Compile Include="APIs\Genius\GeniusAuth.cs" />
+    <Compile Include="APIs\Genius\GeniusData.cs" />
+    <Compile Include="APIs\Genius\GeniusModel.cs" />
+    <Compile Include="APIs\Genius\GeniusScrap.cs" />
+    <Compile Include="APIs\Spotify\SpotifyAPI.cs" />
+    <Compile Include="APIs\Spotify\SpotifyAuth.cs" />
+    <Compile Include="APIs\Spotify\SpotifyData.cs" />
+    <Compile Include="APIs\Spotify\SpotifyModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -106,5 +118,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
