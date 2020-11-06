@@ -2,8 +2,8 @@
 
 namespace SpotifyLyricsFinder.APIs.Apiseeds
 {
-    class ApiseedsAuth
+    public class ApiseedsAuth
     {
-        public static string authorizationToken = "";  //deleted from publicly shared code, taken from Apiseeds dashboard
+        public static string AuthorizationToken = "";  //deleted from publicly shared code, taken from Apiseeds dashboard
     }
 }

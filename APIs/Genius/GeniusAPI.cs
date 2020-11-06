@@ -10,7 +10,7 @@ namespace SpotifyLyricsFinder.APIs.Genius
 
         public GeniusAPI()
         {
-            authorizationToken = GeniusAuth.authorizationToken;
+            authorizationToken = GeniusAuth.AuthorizationToken;
             baseWebRequest = new BaseWebRequest("https://api.genius.com/", authorizationToken);
         }
 

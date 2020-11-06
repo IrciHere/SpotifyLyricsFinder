@@ -11,7 +11,7 @@ namespace SpotifyLyricsFinder.APIs.Apiseeds
 
         public ApiseedsAPI()
         {
-            authorizationToken = ApiseedsAuth.authorizationToken;
+            authorizationToken = ApiseedsAuth.AuthorizationToken;
             baseWebRequest = new BaseWebRequest("https://orion.apiseeds.com/api/", "");     //in apiseeds API authorization token is sent in url
         }
 
